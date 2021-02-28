@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .goToHome{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="loginBox">
+        <div>用户名：<input type="text" class="userName"></div>
+        <div>密  码：<input type="password" id="pwd"></div>
+        <div><button class="login">登 录</button></div>
+    </div>
+    <div class="goToHome">
+        <a href="./home.html">进入首页</a>
+    </div>
+<script>
+ var userDom = document.getElementsByClassName('userName')[0]; //通过class获取dom,因为class是多个，所以获取的是一个数组，这里是数组的第一个值
+        var pwdDom = document.getElementById('pwd'); // 通过id获取dom
+        var loginBtn = document.querySelector('.login') //直接获取，如果是class前面+"."; 如果是id前面+"#"；
+        loginBtn.addEventListener('click', function(){
+            var user = userDom.value; //在这里获取value，每次点击都获取的最新的
+            var pwd = pwdDom.value;
+            if(user && pwd ){ //说明两个都已经填值了
+                var loginBox = document.querySelector('.loginBox');
+                // loginBox.style.display = 'none' // .style 里面是此元素的样式，我们可以修改相关的样式
+                console.log(loginBox.style)
+                // 或者直接删除此元素
+                document.body.removeChild(loginBox) // 删除body中的loginBox元素，因为body是特殊的标签，所以可以直接通过document.body获取
+
+                //创建新元素显示登陆的用户名
+                var userName = '我是已登陆的管理员'
+                var userNameText = document.createElement('div') // 创建一个新标签
+                userNameText.className = 'userNameText';   // 给新创建的标签重命名
+                userNameText.innerHTML = userName;     // 填充标签中的内容
+                document.body.appendChild(userNameText) //将新建的标签追加到body中，同理也可以追加到其它dom中
+                document.querySelector('.goToHome').style.display = 'block'
+            }else{
+                alert('请填写完整')
+            }
+        })
+        // 涉及的知识点：
+        // js 可以操作dom， 对dom进行增删改查；
+        // js 可以修改dom的样式
+        // js 是动态语言，从上到下执行，例如获取pwdDom的value值，一开始就获取的话，就获取不到，
+        //    如果写在点击事件中，每次点击的时候获取，即为实时的
+        // js 绑定事件的方式
+        // js 通过 . 读取，读取之后通过 = 修改； 如var btnStyle = loginBox.style;  //读取btnStyle的css样式
+        //     var display = btnStyle.display; //读取btnStyle的布局样式； btnStyle.display = "none" 或者 "block"
+</script>
+    
+</body>
+</html>

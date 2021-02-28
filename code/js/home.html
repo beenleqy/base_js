@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>欢迎来到首页</h2>
+    <div>
+        <button class="backBtn">返回到登录页</button>
+    </div>
+   <ul class="personDom"></ul>
+<script>
+    document.querySelector('.backBtn').onclick =  function(){
+        window.location.href = './login.html';  // 这种表示相对路径，./ 指的是同一路径，
+        //  ../ 跳出当前路径出去 相对于和example文件同一层了
+    }
+
+    var data1 = [ 
+        {name: '张三', age: 18, sex: 1, graduate: 0},
+        {name: '李四', age: 20, sex: 1, graduate: 1},
+        {name: '丽丽', age: 16, sex: 0, graduate: 0},
+        {name: '小花', age: 20, sex: 0, graduate: 1}
+    ]
+    var personDom = document.querySelector('.personDom')
+    handleData(data1, personDom)
+ 
+    function handleData(data, dom){
+        // 这一段封装成函数的目的： 可以多次使用
+        // data，dom 是参数，相当于拷贝了data1和personDom
+        if(data && Object.prototype.toString.call(data) === '[object Array]'){
+            var result = ''
+            for(var i = 0; i < data.length ; i++){
+                // var li = document.createElement('li');
+                var sexText = '男'
+                if(data[i].sex == 0){
+                    sexText = '女'
+                }
+                var li = '<li> 姓名：' + data[i].name + ', 年龄：' + 
+                    data[i].age + ', 性别：' + sexText + ', 是否毕业: ' + (!! data[i].graduate) + '</li>';
+                result = result + li  // 叠加
+            }
+        }
+        dom.innerHTML = result
+        // dom内填充内容可以使用innerHTML和innerText，两者有什么区别呢，可以换成innerText试试
+    }
+
+
+</script>
+    
+</body>
+</html>
