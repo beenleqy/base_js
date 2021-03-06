@@ -1,0 +1,164 @@
+<!--
+    不明白的点：
+    1. if(data && Object.prototype.toString.call(data) === '[object Array]')
+    2. (!! data[i].graduate)
+-->
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+
+    <style>
+        *{
+            margin: 0;
+        }
+        body,html{
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        body{
+            padding: 0 20px;
+        }
+        .user{
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 20px;
+        }
+        .search{
+            display: none;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="home-div">
+        <h2>欢迎来到首页  <button id="back-button">返回登录页</button></h2>
+        <div >
+            <div class="user"></div>
+            <div>
+                <span>权限：
+                    <input type="radio" name="role" value="1" /> 管理员
+                    <input type="radio" name="role" value="0" /> 普通
+                </span>
+                <button class="setRole" style="margin-left: 30px;">设置权限</button>
+                <button class="search" style="margin-left: 30px;">查询数据</button>
+            </div>
+          
+           
+        </div>
+        <ul class="data-ul"></ul>
+        
+    </div>
+
+    <script>
+        var backButton = document.querySelector("#back-button");
+        var dataUl = document.querySelector(".data-ul");
+        var userInfo = {
+            name: '夏夏',
+            city: '广州',
+            role: 0
+        }
+        handleInfo();
+        setRadio(userInfo.role)
+        function handleInfo(){
+            console.log(userInfo, '====')
+            var html = '用户名：' + userInfo.name + ',  国家： ' + (userInfo.country || '中国') + ',  城市:  ' + userInfo.city + '， 是否有管理权限： ' + (!!userInfo.role)
+            document.querySelector('.user').innerHTML = html;
+            isShowSearch();
+        }
+
+        function setRadio(val){
+            var radioBtn = document.getElementsByName('role');
+            for(var i = 0; i < radioBtn.length; i++){
+                if(val == radioBtn[i].value){
+                    radioBtn[i].checked = true
+                }
+            } 
+        }
+
+        document.querySelector('.setRole').addEventListener('click', function(){
+            var radioBtn = document.getElementsByName('role');
+            for(var i = 0; i < radioBtn.length; i++){
+                if(radioBtn[i].checked){
+                    userInfo.role = Number(radioBtn[i].value);
+                }
+            }
+            handleInfo()
+        })
+
+        function isShowSearch(){
+            if(userInfo.role){
+                document.querySelector('.search').style.display = 'block';
+            
+            }else{
+                document.querySelector('.search').style.display = 'none';
+                dataUl.innerHTML = '';
+            }
+        
+        }
+
+      
+
+        var dataset = [{
+            name: '张三',
+            age: 18,
+            sex: 1,
+            graduate: 0
+        }, {
+            name: '李四',
+            age: 20,
+            sex: 1,
+            graduate: 1
+        }, {
+            name: '丽丽',
+            age: 16,
+            sex: 0,
+            graduate: 0
+        }, {
+            name: '小花',
+            age: 20,
+            sex: 0,
+            graduate: 1
+        }]
+
+        // 单击按钮返回登录页
+        backButton.addEventListener("click", function() {
+            window.location.href = "./login.html";
+        })
+
+        // 用 data 填充 <ul>
+        // handleData(dataset, dataUl);
+        document.querySelector('.search').addEventListener('click', function(){
+            handleData(dataset, dataUl)
+        })
+        function handleData(data, dom) {
+            // 检查数据有效性
+            if (data && Object.prototype.toString.call(data) === '[object Array]') {
+
+                for (i = 0; i < dataset.length; i++) {
+                    var sexText = "男";
+                    if (data[i].sex == 0) {
+                        sexText = "女";
+                    }
+
+                    var li = document.createElement("li");
+                    var liText = document.createTextNode(data[i].name + "，年龄：" + data[i].age + "，性别：" + sexText + "，毕业与否：" + (!!data[i].graduate));
+                    li.appendChild(liText);
+                    dataUl.append(li);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
