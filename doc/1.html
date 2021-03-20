@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var menus = []
+var menu = [
+    { id: '1', name: '用户信息',
+      sub: [{id: '1_1', name: '个人中心', sub: []},   		
+            {id: '1_2', name: 'vip权限', sub: []} ]},
+     { id: '2', name: '操作中心',
+      sub: [{id: '2_1', name: '查看权限', sub: [
+          		{id: '2_1_1', name: '修改权限', sub: []}  ]},   		
+            {id: '2_2', name: '修改密码', sub: []} ]},
+]
+for(var i = 0; i < menu.length; i++){
+    var res = menu[i];
+    var j = 0;
+    while(res.id){
+    	menus.push(res.name)
+    	res = res.sub[j];
+        //j++;
+        console.log(res)
+        if(!res.id){
+          j = 0 
+        }
+	}
+}
+console.log(menus)
+    </script>
+</body>
+</html>
